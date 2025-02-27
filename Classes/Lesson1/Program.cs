@@ -1,112 +1,124 @@
-﻿namespace Program;
+﻿namespace Project;
 
-
-class BankAccount
+public class BigInt
 {
-    public string name;
-    public int money;
+    private char[] Number;
 
-    public BankAccount(string name, int money)
+    public BigInt(string number)
     {
-        this.name = name;
-        this.money = money;
+        Number = number.ToCharArray();
     }
 
-    public BankAccount(string name)
+    public BigInt(int number)
     {
-        this.name = name;
-        money = 0;
+        string num = number.ToString();
+        Number = num.ToCharArray();
+    }
+
+    public BigInt(char[] number)
+    {
+        Number = number;
+    }
+
+    public int Length()
+    {
+        return Number.Length;
     }
 
     public override string ToString()
     {
-        return $"Name: {name}, Money: {money}";
+        return new string(Number);
     }
 
-    public override bool Equals(object? obj)
+
+    public string Abs()
     {
-        if (obj is BankAccount other)
+        if (Number[0] == '-')
         {
-            return name == other.name;
+            return new string(Number, 1, Number.Length - 1);
         }
-
-        return false;
+        return new string(Number);
     }
 
-    public override int GetHashCode()
+    public void CompareBig(BigInt other)
     {
-        return name.GetHashCode();
-    }
-
-    public static BankAccount operator +(BankAccount our, int amount)
-    {
-        return new BankAccount(our.name, our.money + amount);
-    }
-
-    public static BankAccount operator -(BankAccount our, int amount)
-    {
-        if (amount > our.money) {
-            Console.WriteLine("Not enough money to withdraw!");
-            return new BankAccount(our.name, our.money);
-        }
-
-        return new BankAccount(our.name, our.money - amount);
-    }
-
-    public static bool operator >(BankAccount our, BankAccount other)
-    {
-        if (our.money > other.money)
+        if (Number.Length > other.Length())
         {
-            return true;
+            Console.WriteLine("Your number is bigger!");
+            return;
         }
-        return false;
+
+        else if (Number.Length < other.Length())
+        {
+            Console.WriteLine("Your number is smaller!");
+        }
+
+        else
+        {
+            bool big = false;
+            bool equal = false;
+            for (int i = 0; i < Number.Length; i++)
+            {
+                if (Number[i] > other.Number[i])
+                {
+                    big = true;
+                    equal = false;
+                    break;
+                }
+                else if (Number[i] == other.Number[i])
+                {
+                    big = false;
+                    equal = true;
+                }
+            }
+
+            if (big == true)
+            {
+                Console.WriteLine("Your number is bigger!");
+                return;
+            }
+            else if (equal == true)
+            {
+                Console.WriteLine("Your numbers are equal!");
+                return;
+            }
+
+            Console.WriteLine("Your number is smaller!");
+        }
     }
 
-    public static bool operator <(BankAccount our, BankAccount other)
+    public static BigInt operator +(BigInt a, BigInt b)
     {
-        if (our.money > other.money)
-        {
-            return false;
-        }
-        return true;
-    }
-    public static bool operator >=(BankAccount our, BankAccount other)
-    {
-        if (our.money >= other.money)
-        {
-            return false;
-        }
-        return true;
-    }
+        int max = Math.Max(a.Length(), b.Length());
+        char[] final = new char[max + 1];
+        int k = max;
+        int i = a.Length() - 1;
+        int j = b.Length() - 1;
+        int carry = 0;
 
-    public static bool operator <=(BankAccount our, BankAccount other)
-    {
-        if (our.money >= other.money)
+        while (i >= 0 || j >= 0 || carry > 0)
         {
-            return true;
+            int num1 = (i >= 0) ? a.Number[i] - '0' : 0;
+            int num2 = (j >= 0) ? b.Number[j] - '0' : 0;
+            int sum = num1 + num2 + carry;
+            carry = sum / 10;
+            final[k] = (char)(sum % 10 + '0');
+            i--;
+            j--;
+            k--;
         }
-        return false;
+        return new BigInt(final);
     }
 }
 
-
-static class Prog
+class Program
 {
-    static void Main()
+    static void Main(string[] args)
     {
-        BankAccount nor = new BankAccount("Aram");
-        BankAccount hin = new BankAccount("Hakob", 100);
-        Console.WriteLine(nor.ToString());
-        Console.WriteLine(hin.ToString());
-        nor += 500;
-        hin -= 10;
-        if (nor > hin)
-        {
-            Console.WriteLine("Nory kruma");
-        }
-        else
-        {
-            Console.WriteLine("Gna ashxati");
-        }
+        BigInt num1 = new BigInt("12345678");
+        BigInt num2 = new BigInt("987654321");
+        Console.WriteLine(num1.Abs());
+        BigInt num3 = num1 + num2;
+        Console.WriteLine(num3.ToString());
     }
 }

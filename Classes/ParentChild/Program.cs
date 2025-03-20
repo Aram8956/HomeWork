@@ -1,4 +1,5 @@
-﻿namespace ParentChild;
+//Ստեղծել Parent և Child կլասները, որոնցից առաջինը ծնողի մասին է տեղեկություններ պարունակում, երկրորդը՝ երեխայի:
+namespace ParentChild;
 
 class Program
 {

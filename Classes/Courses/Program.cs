@@ -1,15 +1,31 @@
-/*Ստեղծել, Course, Group, Module կլասները
-Course - ինֆորմացիա է պարունակում դասընթացի մասին
-(անուն,  ամսավճար, մոդուլներ)
-Module - ինֆորմացիա է պարունակում դասընթացի առանձին կտորի մասին
-(վերնագիր, տևողություն)
-Group - Ներկայացնում է խմբի տվյլաները
-(անուն, ուսանողների քանակ, կուրս)
-Course կլասից ժառանգվում են Web, Game, AI  կլասները
-ընդ որում Web-ը ունի նաև type դաշտ, որը կարող է լինել frontend, backend, fullstack
-Game-ը ունի engine դաշտ, որը կարող է լինել unity, unreal:
-Course,Module և Group, Course կապը has a է, իսկ Course=>Web,Game,Ai -ը is a:
-namespace Class;*/
+/* Create the classes Course, Group, and Module.
+
+Course - contains information about a course
+(name, monthly fee, modules)
+
+Module - contains information about a separate part of the course
+(title, duration)
+
+Group - represents group data
+(name, number of students, course)
+
+The classes Web, Game, and AI inherit from the Course class.
+
+Additionally:
+Web has a field type, which can be:
+frontend, backend, fullstack
+
+Game has a field engine, which can be:
+unity, unreal
+
+The relationships:
+Course has-a Module
+Group has-a Course
+
+Course => Web, Game, AI is an is-a relationship.
+
+namespace Class;
+*/
 
 class Program
 {
